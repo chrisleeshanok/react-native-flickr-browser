@@ -1,9 +1,7 @@
 'use strict';
 import { combineReducers } from 'redux';
-import photos from './photos';
+import photoReducer from './photos';
 
-const rootReducer = combineReducers({
-    photos
+export default combineReducers({
+    photos: photoReducer
 });
-
-export default rootReducer;
