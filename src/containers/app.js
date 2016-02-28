@@ -8,7 +8,8 @@ import React, {
   Image,
   ScrollView,
   ListView,
-  View
+  View,
+  StatusBarIOS
 } from 'react-native';
 
 import Photo from '../components/Photo';
@@ -19,6 +20,9 @@ export default class FlickrReactNative extends Component {
 
 	constructor(props) {
 		super(props);
+
+        StatusBarIOS.setStyle('light-content')
+
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 != r2
         });
@@ -36,7 +40,7 @@ export default class FlickrReactNative extends Component {
 
 	componentDidMount() {
 		if (!this.state.hasLoaded) {
-			FlickrApiService.getInterestingPhotos()
+			FlickrApiService.getPhotosBySearch()
 			.then((photos) => {
 				this.setState({
 				photos: photos.photo,
@@ -54,6 +58,26 @@ export default class FlickrReactNative extends Component {
 			});
 		}
 	}
+
+    fetchNextPage() {
+		FlickrApiService.getPhotosBySearch(this.state.page + 1)
+		.then((photos) => {
+            let newPhotos = this.state.photos.concat(photos.photo);
+			this.setState({
+    			photos: newPhotos,
+    			page: photos.page,
+    			pages: photos.pages,
+    			perpage: photos.perpage,
+    			total: photos.total,
+                dataSource: this.state.dataSource.cloneWithRows(newPhotos),
+    			hasLoaded: true
+			});
+		})
+		.catch((error) => {
+			console.warn(error);
+			//TODO: do some error stuff
+		});
+    }
 
     renderRow(photo) {
         return (
@@ -81,7 +105,9 @@ export default class FlickrReactNative extends Component {
                 {this.renderHeader()}
                 <ListView style={styles.photo_grid}
                     dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}>
+                    renderRow={this.renderRow}
+                    onEndReachedThreshold={50}
+                    onEndReached={this.fetchNextPage.bind(this)}>
     			</ListView>
             </View>
 
