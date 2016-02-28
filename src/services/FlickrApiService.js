@@ -1,22 +1,8 @@
 'use strict';
+import {DEFAULTS, FLICKR} from '../constants/constants';
 
-const DEFAULTS = {
-    PAGE: 1,
-    PERPAGE: 20
-};
 
-const FLICKR = {
-    BASE_URL: 'https://api.flickr.com/services/rest/?',
-    ENDPOINTS: {
-        INTERESTING_ENDPOINT: 'method=flickr.interestingness.getList',
-        SEARCH: 'method=flickr.photos.search&safe_search='
-    },
-    API_KEY: '&api_key=04e8068926ac0597663542954ef72376',
-    EXTRAS: "&extras=owner_name, description, date_taken, date_upload",
-    FORMAT: "&format=json&nojsoncallback=1"
-};
-
-const buildApiURL = function(endpoint, page = DEFAULTS.PAGE, numresults = DEFAULTS.PERPAGE, string) {
+const buildApiURL = (endpoint, page = DEFAULTS.PAGE, numresults = DEFAULTS.PERPAGE, string) => {
     let url = FLICKR.BASE_URL;
     switch(endpoint) {
         case 'interesting':
@@ -34,12 +20,12 @@ const buildApiURL = function(endpoint, page = DEFAULTS.PAGE, numresults = DEFAUL
 
 export default {
 
-    getPhoto: function() {
+    getPhoto: () => {
         //Implement get photo by id
         return "Not Implemented";
     },
 
-    getPhotosBySearch: function(page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE, searchString = 'bokeh') {
+    getPhotosBySearch: (page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE, searchString = 'bokeh') => {
         //TODO: Do some validation on the searchString
         return new Promise((resolve, reject) => {
             fetch(buildApiURL('search', page, perpage, searchString))
@@ -56,7 +42,7 @@ export default {
         });
     },
 
-    getInterestingPhotos: function(page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE) {
+    getInterestingPhotos: (page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE) => {
         return new Promise((resolve, reject) => {
             fetch(buildApiURL('interesting', page, perpage))
             .then((response) => {

@@ -12,20 +12,32 @@ import React, {
   StatusBarIOS
 } from 'react-native';
 
+import configureStore from '../store/configureStore';
+import { Provider } from 'react-redux';
+
 import Photo from '../components/Photo';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 import styles from '../styles/styles';
+
 import FlickrApiService from '../services/FlickrApiService';
+
+const store = configureStore();
 
 export default class FlickrReactNative extends Component {
 
 	constructor(props) {
 		super(props);
 
-        StatusBarIOS.setStyle('light-content')
+        //We want the light style status bar
+        StatusBarIOS.setStyle('light-content');
 
+        //Required Datasource for the listview
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 != r2
         });
+
 		this.state = {
 			title: 'snap of the day',
 			page: 0,
@@ -61,75 +73,60 @@ export default class FlickrReactNative extends Component {
 	}
 
     fetchNextPage() {
-        this.setState({asyncLoad: true});
-
-		FlickrApiService.getPhotosBySearch(this.state.page + 1)
-		.then((photos) => {
-            let newPhotos = this.state.photos.concat(photos.photo);
-			this.setState({
-    			photos: newPhotos,
-    			page: photos.page,
-    			pages: photos.pages,
-    			perpage: photos.perpage,
-    			total: photos.total,
-                dataSource: this.state.dataSource.cloneWithRows(newPhotos),
-    			hasLoaded: true,
-                asyncLoad: false
-			});
-		})
-		.catch((error) => {
-			console.warn(error);
-			//TODO: do some error stuff
-		});
+        if (!this.state.asyncLoad) {
+            this.setState({asyncLoad: true}, () => {
+                FlickrApiService.getPhotosBySearch(this.state.page + 1)
+                .then((photos) => {
+                    let newPhotos = this.state.photos.concat(photos.photo);
+                    this.setState({
+                        photos: newPhotos,
+                        page: photos.page,
+                        pages: photos.pages,
+                        perpage: photos.perpage,
+                        total: photos.total,
+                        dataSource: this.state.dataSource.cloneWithRows(newPhotos),
+                        hasLoaded: true,
+                        asyncLoad: false
+                    });
+                })
+                .catch((error) => {
+                    console.warn(error);
+                    //TODO: do some error stuff
+                });
+            });
+        }
     }
 
-    renderRow(photo) {
+    _renderRow(photo) {
         return (
             <Photo photoData={photo}></Photo>
         );
     }
 
-    renderHeader() {
-        let width = {width: Dimensions.get('window').width}
-        return (
-            <View style={[styles.grid_header, width]}>
-                <Text style={styles.grid_header_text}>{this.state.title}</Text>
-                {/*<TextInput
-                    style={styles.search_input}
-                    value={'Search'}
-                  />*/}
-            </View>
-        );
-    }
-
-    renderFooter() {
-        let width = {width: Dimensions.get('window').width}
+    _renderFooter() {
         if (this.state.asyncLoad) {
-            return (
-                <View style={[styles.grid_footer, width]}>
-                    <Text style={styles.grid_footer_text}>...</Text>
-                </View>
-            );
+            return (<Footer/>);
         }
     }
 
 	render() {
         let width = {width: Dimensions.get('window').width};
 		return (
+            <Provider store={store}>
             <View style={styles.scroll_container}>
-                {this.renderHeader()}
+                <Header title={this.state.title} />
                 <View style={styles.photo_grid_wrapper}>
                     <ListView contentContainerStyle={styles.photo_grid}
                         dataSource={this.state.dataSource}
-                        renderRow={this.renderRow}
-                        renderFooter={this.renderFooter.bind(this)}
+                        renderRow={this._renderRow}
+                        renderFooter={this._renderFooter.bind(this)}
                         onEndReachedThreshold={200}
                         onEndReached={this.fetchNextPage.bind(this)}
                         pageSize={20}>
         			</ListView>
                 </View>
             </View>
-
+            </Provider>
 		);
 	}
 }

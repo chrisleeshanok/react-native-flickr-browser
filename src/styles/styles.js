@@ -28,7 +28,7 @@ export default StyleSheet.create({
   grid_footer: {
     backgroundColor: '#000000',
     height: 60,
-    padding: 10,
+    padding: 20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap'
   },
   grid_footer_text: {
-    fontSize: 20,
+    fontSize: 40,
     color: '#ffffff',
     textAlign: 'center',
     margin: 10
