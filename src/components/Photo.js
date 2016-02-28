@@ -24,8 +24,8 @@ export default class Photo extends Component {
         } else {
             //Portrait
             return {
-                width: Dimensions.get('window').width,
-                height: Dimensions.get('window').height/2
+                width: Dimensions.get('window').width/2,
+                height: Dimensions.get('window').width/2
             }
         }
     }
@@ -33,7 +33,7 @@ export default class Photo extends Component {
     render() {
          let photoUri = 'https://farm' + this.props.photoData.farm + '.staticflickr.com/' + this.props.photoData.server + '/' + this.props.photoData.id + '_' + this.props.photoData.secret + '.jpg';
          return (
-             <View>
+             <View style={[styles.photo_thumb_wrapper, this.calculateThumbSize()]}>
                 <Image style={[styles.photo_thumb, this.calculateThumbSize()]} key={this.props.photoData.id} source={{uri: photoUri}} />
              </View>
          );

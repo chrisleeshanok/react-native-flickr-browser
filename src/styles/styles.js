@@ -6,10 +6,7 @@ export default StyleSheet.create({
       flex: 1,
       backgroundColor: '#000000'
   },
-  photo_grid: {
-    // flexDirection: 'row',
-    // backgroundColor: '#F5FCFF',
-    // flexWrap: 'wrap'
+  photo_grid_wrapper: {
     flex: 10
   },
   grid_header: {
@@ -28,11 +25,34 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 10
   },
+  grid_footer: {
+    backgroundColor: '#000000',
+    height: 60,
+    padding: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  grid_footer_text: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: 'center',
+    margin: 10
+  },
+  photo_grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  photo_thumb_wrapper: {
+
+  },
+  photo_thumb: {
+      flex: 1
+  },
   search_input: {
       color: '#ffffff',
       backgroundColor: '#000000'
   },
-  photo_thumb: {
-
-  }
 });
