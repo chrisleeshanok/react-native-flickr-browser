@@ -2,7 +2,7 @@
 
 const DEFAULTS = {
     PAGE: 1,
-    PERPAGE: 50
+    PERPAGE: 20
 };
 
 const FLICKR = {
@@ -16,7 +16,7 @@ const FLICKR = {
 };
 
 const buildApiURL = function() {
-    return "https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=0a33a72ec4fe7771e771f64b66d16d4c&extras=owner_name%2C+description%2C+date_taken%2C+date_upload&per_page=50&page=1&format=json&nojsoncallback=1";
+    return "https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=0a33a72ec4fe7771e771f64b66d16d4c&extras=owner_name%2C+description%2C+date_taken%2C+date_upload&per_page=20&page=1&format=json&nojsoncallback=1";
 };
 
 export default {
