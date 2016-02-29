@@ -10,6 +10,6 @@ export const FLICKR = {
         SEARCH: 'method=flickr.photos.search&safe_search='
     },
     API_KEY: '&api_key=04e8068926ac0597663542954ef72376',
-    EXTRAS: "&extras=owner_name, description, date_taken, date_upload",
+    EXTRAS: "&extras=owner_name, description, date_taken, date_upload, o_dims, url_l, url_o, url_s",
     FORMAT: "&format=json&nojsoncallback=1"
 };

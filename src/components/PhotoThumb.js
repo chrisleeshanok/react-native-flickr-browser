@@ -3,12 +3,13 @@ import React, {
   Component,
   Image,
   View,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 import styles from '../styles/styles';
 
-export default class Photo extends Component {
+export default class PhotoThumb extends Component {
 
     constructor(props) {
         super(props);
@@ -30,11 +31,20 @@ export default class Photo extends Component {
         }
     }
 
+    _onTouchHandler() {
+        const { viewPhoto } = this.props;
+        viewPhoto(this.props.photoData);
+    }
+
     render() {
-         let photoUri = 'https://farm' + this.props.photoData.farm + '.staticflickr.com/' + this.props.photoData.server + '/' + this.props.photoData.id + '_' + this.props.photoData.secret + '.jpg';
+         let photoUri = (this.props.photoData.url_s ||
+         'https://farm' + this.props.photoData.farm + '.staticflickr.com/' + this.props.photoData.server + '/' + this.props.photoData.id + '_' + this.props.photoData.secret + '.jpg');
+
          return (
              <View style={[styles.photo_thumb_wrapper, this.calculateThumbSize()]}>
-                <Image style={[styles.photo_thumb, this.calculateThumbSize()]} key={this.props.photoData.id} source={{uri: photoUri}} />
+                <TouchableHighlight onPress={this._onTouchHandler.bind(this)}>
+                    <Image style={[styles.photo_thumb, this.calculateThumbSize()]} key={this.props.photoData.id} source={{uri: photoUri}} />
+                </TouchableHighlight>
              </View>
          );
     }

@@ -4,7 +4,8 @@ const initialState = {
     page: 0,
     photos: [],
     perpage: 0,
-    total: 0
+    total: 0,
+    photo: undefined
 };
 
 export default function photos(state = initialState, action) {

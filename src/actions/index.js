@@ -9,6 +9,15 @@ export function doneFetching() {
     return { type: types.DONE_FETCHING };
 }
 
+export function viewPhoto(photo) {
+    return { type: types.VIEW_PHOTO, photo };
+}
+
+export function closePhoto(photo) {
+    return { type: types.CLOSE_PHOTO, photo };
+}
+
+
 //Photo related
 export function addPhotos(photos) {
     return { type: types.ADD_PHOTOS, photos };

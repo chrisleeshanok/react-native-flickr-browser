@@ -10,7 +10,8 @@ import React, {
   View
 } from 'react-native';
 
-import Photo from '../components/Photo';
+import PhotoThumb from '../components/PhotoThumb';
+import PhotoView from '../components/PhotoView';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Loading from '../components/Loading';
@@ -70,7 +71,7 @@ export default class Gallery extends Component {
 
     _renderRow(photo) {
         return (
-            <Photo photoData={photo}></Photo>
+            <PhotoThumb photoData={photo} {...this.props}></PhotoThumb>
         );
     }
 
@@ -85,6 +86,7 @@ export default class Gallery extends Component {
     }
 
 	render() {
+        let width = {width: Dimensions.get('window').width};
 
         if (!this.props.gallery.hasLoaded) {
             return (
@@ -97,14 +99,21 @@ export default class Gallery extends Component {
             );
         }
 
-        let width = {width: Dimensions.get('window').width};
+        if (this.props.gallery.viewPhoto) {
+            return (
+                <View style={styles.scroll_container}>
+                    <PhotoView photoData={this.props.gallery.viewPhoto} {...this.props}></PhotoView>
+                </View>
+            );
+        }
+
 		return (
             <View style={styles.scroll_container}>
                 <Header title={this.props.gallery.title} />
                 <View style={styles.photo_grid_wrapper}>
                     <ListView contentContainerStyle={styles.photo_grid}
                         dataSource={this._getDataSource()}
-                        renderRow={this._renderRow}
+                        renderRow={this._renderRow.bind(this)}
                         renderFooter={this._renderFooter.bind(this)}
                         onEndReachedThreshold={40}
                         onEndReached={this.fetchNextPage.bind(this)}

@@ -55,4 +55,41 @@ export default StyleSheet.create({
       color: '#ffffff',
       backgroundColor: '#000000'
   },
+  photoOverlay: {
+      backgroundColor: '#000000',
+      width: Dimensions.get('window').width,
+      padding: 20,
+      height: 200,
+      marginTop: -200,
+  },
+  photoOverlayTitle: {
+      color: '#ffffff',
+      fontSize: 22
+  },
+  photoOverlayArtist: {
+      marginTop: 7,
+      color: '#ffffff',
+      fontSize: 12
+  },
+  photoOverlayDescription: {
+      marginTop: 10,
+      color: '#ffffff',
+      fontSize: 14
+  },
+  closePhoto: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: '#000000',
+      marginTop: (Dimensions.get('window').height * (-1)) + 30,
+      marginLeft: (Dimensions.get('window').width/2) - 20,
+      opacity: 0.4
+  },
+  closePhotoText: {
+      padding: 8,
+      paddingLeft: 14,
+      fontSize: 20,
+      color: '#ffffff'
+  }
+
 });
