@@ -25,10 +25,13 @@ export default {
         return "Not Implemented";
     },
 
-    getPhotosBySearch: (page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE, searchString = 'bokeh') => {
-        //TODO: Do some validation on the searchString
+    getPhotosBySearch: (searchString, page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE) => {
+
+        //Fallback to the interesting endpoint if no search term provided
+        let endpoint = (!searchString) ? 'interesting': 'search';
+
         return new Promise((resolve, reject) => {
-            fetch(buildApiURL('search', page, perpage, searchString))
+            fetch(buildApiURL(endpoint, page, perpage, searchString))
             .then((response) => {
                 try {
                     console.log(JSON.parse(response._bodyText).photos);
@@ -42,6 +45,7 @@ export default {
         });
     },
 
+    //Unused for now. Was planning on using this for a separate feature
     getInterestingPhotos: (page = DEFAULTS.PAGE, perpage = DEFAULTS.PERPAGE) => {
         return new Promise((resolve, reject) => {
             fetch(buildApiURL('interesting', page, perpage))
