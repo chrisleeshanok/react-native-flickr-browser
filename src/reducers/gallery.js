@@ -2,14 +2,16 @@ import {
     IS_FETCHING,
     DONE_FETCHING,
     VIEW_PHOTO,
-    CLOSE_PHOTO
+    CLOSE_PHOTO,
+    SET_SCROLL_OFFSET_Y
 } from '../constants/actionTypes';
 
 const initialState = {
     title: 'snaps',
     hasLoaded: false,
     isFetching: false,
-    viewPhoto: undefined
+    viewPhoto: undefined,
+    scrollOffsetY: 0
 };
 
 export default function gallery(state = initialState, action) {
@@ -34,6 +36,11 @@ export default function gallery(state = initialState, action) {
             return {
                 ...state,
                 viewPhoto: undefined
+            };
+        case SET_SCROLL_OFFSET_Y:
+            return {
+                ...state,
+                scrollOffsetY: action.offset
             };
         default:
             return state;

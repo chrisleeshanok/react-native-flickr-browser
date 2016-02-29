@@ -52,8 +52,21 @@ export default class Gallery extends Component {
 		}
 	}
 
+    componentWillUpdate(nextProps) {
+        if (nextProps.gallery.viewPhoto && !this.props.gallery.viewPhoto) {
+            const {setScrollOffsetY} = this.props;
+            setScrollOffsetY(this.refs.listView.scrollProperties.offset);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!this.props.gallery.viewPhoto && prevProps.gallery.viewPhoto) {
+            this.refs.listView.scrollTo({x: 0, y: this.props.gallery.scrollOffsetY, animated:false});
+        }
+    }
+
     fetchNextPage() {
-        if (!this.props.gallery.isFetching) {
+        if (!this.props.gallery.isFetching && this.props.photos.page < this.props.photos.pages) {
             const { isFetching, addPhotos, doneFetching } = this.props;
             isFetching();
 
@@ -111,11 +124,11 @@ export default class Gallery extends Component {
             <View style={styles.scroll_container}>
                 <Header title={this.props.gallery.title} />
                 <View style={styles.photo_grid_wrapper}>
-                    <ListView contentContainerStyle={styles.photo_grid}
+                    <ListView ref="listView" contentContainerStyle={styles.photo_grid}
                         dataSource={this._getDataSource()}
                         renderRow={this._renderRow.bind(this)}
                         renderFooter={this._renderFooter.bind(this)}
-                        onEndReachedThreshold={40}
+                        onEndReachedThreshold={0}
                         onEndReached={this.fetchNextPage.bind(this)}
                         pageSize={20}>
         			</ListView>

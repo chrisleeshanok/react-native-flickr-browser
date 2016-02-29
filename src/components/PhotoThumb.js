@@ -31,7 +31,7 @@ export default class PhotoThumb extends Component {
         }
     }
 
-    _onTouchHandler() {
+    _onTouchHandler(e) {
         const { viewPhoto } = this.props;
         viewPhoto(this.props.photoData);
     }

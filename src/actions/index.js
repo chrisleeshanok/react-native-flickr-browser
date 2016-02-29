@@ -17,6 +17,10 @@ export function closePhoto(photo) {
     return { type: types.CLOSE_PHOTO, photo };
 }
 
+export function setScrollOffsetY(offset) {
+    return { type: types.SET_SCROLL_OFFSET_Y, offset };
+}
+
 
 //Photo related
 export function addPhotos(photos) {

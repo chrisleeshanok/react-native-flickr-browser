@@ -1,7 +1,8 @@
 'use strict';
 import React, {
   Component,
-  StatusBarIOS
+  StatusBarIOS,
+  NavigatorIOS
 } from 'react-native';
 
 import { connect } from 'react-redux';

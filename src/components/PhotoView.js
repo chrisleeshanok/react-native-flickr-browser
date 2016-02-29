@@ -16,7 +16,6 @@ export default class PhotoView extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.photoData);
 
         this.state = {
             showMetadata: true
@@ -53,7 +52,7 @@ export default class PhotoView extends Component {
     }
 
     render() {
-         let photoUri = (this.props.photoData.url_o || this.props.photoData.url_l);
+         let photoUri = (this.props.photoData.url_l);
          let horizontal = (this.props.photoData.width_l/this.props.photoData.height_l > 1) ? true : false;
          let opacity = (this.state.showMetadata) ? {opacity: 0.65} : {opacity: 0};
          return (

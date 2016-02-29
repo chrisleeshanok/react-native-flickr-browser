@@ -2,6 +2,7 @@ import { ADD_PHOTOS } from '../constants/actionTypes';
 
 const initialState = {
     page: 0,
+    pages: 0,
     photos: [],
     perpage: 0,
     total: 0,
@@ -15,6 +16,7 @@ export default function photos(state = initialState, action) {
                 ...state,
                 photos: state.photos.concat(action.photos.photo),
                 page: action.photos.page,
+                pages: action.photos.pages,
                 perpage: action.photos.perpage,
                 total: action.photos.total
             };

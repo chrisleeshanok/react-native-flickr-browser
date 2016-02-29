@@ -59,8 +59,8 @@ export default StyleSheet.create({
       backgroundColor: '#000000',
       width: Dimensions.get('window').width,
       padding: 20,
-      height: 200,
-      marginTop: -200,
+      height: (Dimensions.get('window').height/2.7),
+      marginTop: (Dimensions.get('window').height/2.7)*(-1),
   },
   photoOverlayTitle: {
       color: '#ffffff',
@@ -87,7 +87,7 @@ export default StyleSheet.create({
   },
   closePhotoText: {
       padding: 8,
-      paddingLeft: 14,
+      paddingLeft: 13,
       fontSize: 20,
       color: '#ffffff'
   }
